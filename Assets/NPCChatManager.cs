@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OpenAI; 
+using UnityEngine.Events; 
+using OpenAI;
+using Oculus.Voice; 
 
 public class NPCChatManager : MonoBehaviour
 {
@@ -22,19 +24,41 @@ public class NPCChatManager : MonoBehaviour
 
     //List of request messages
     private List<ChatMessage> messages = new List<ChatMessage>();
+
+    //VTT (Speech to text) componentç
+    public AppVoiceExperience STT;
     #endregion
 
+    #region EVENTS
+    [System.Serializable]
+    public class OnResponseEvent : UnityEvent<string> { }
+
+    public OnResponseEvent OnResponse; 
+    #endregion
+
+    #region AWAKE
+    private void Awake()
+    {
+
+    }
+    #endregion
     #region START
     void Start()
     {
-        MakeRequest(TestMessage); 
+        //MakeRequest(TestMessage); 
     }
     #endregion
 
     #region UPDATE
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("TALK..."); 
+            STT.Activate(); 
+        }
+
+        STT.VoiceEvents.OnFullTranscription.AddListener(DebugString);
     }
     #endregion
 
@@ -66,7 +90,9 @@ public class NPCChatManager : MonoBehaviour
             messages.Add(responseMessage);
 
             Debug.Log("ROLE: "+ responseMessage.Role); 
-            Debug.Log("RESPONSE:" + responseMessage.Content); 
+            Debug.Log("RESPONSE:" + responseMessage.Content);
+
+            OnResponse.Invoke(responseMessage.Content); 
         }
         
     }
@@ -94,6 +120,11 @@ public class NPCChatManager : MonoBehaviour
                            + "Here is the information of your sourroundign scene: \n" + NPC_Scene + "\n"; 
 
         return instruction; 
+    }
+
+    public void DebugString(string text)
+    {
+        Debug.Log("You said: " + text);
     }
     #endregion
 }
