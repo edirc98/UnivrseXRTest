@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events; 
 using OpenAI;
-using Oculus.Voice; 
 
 public class NPCChatManager : MonoBehaviour
 {
@@ -25,8 +24,7 @@ public class NPCChatManager : MonoBehaviour
     //List of request messages
     private List<ChatMessage> messages = new List<ChatMessage>();
 
-    //VTT (Speech to text) componentç
-    public AppVoiceExperience STT;
+    
     #endregion
 
     #region EVENTS
@@ -42,6 +40,7 @@ public class NPCChatManager : MonoBehaviour
 
     }
     #endregion
+
     #region START
     void Start()
     {
@@ -52,13 +51,7 @@ public class NPCChatManager : MonoBehaviour
     #region UPDATE
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("TALK..."); 
-            STT.Activate(); 
-        }
-
-        STT.VoiceEvents.OnFullTranscription.AddListener(DebugString);
+        
     }
     #endregion
 
@@ -122,9 +115,6 @@ public class NPCChatManager : MonoBehaviour
         return instruction; 
     }
 
-    public void DebugString(string text)
-    {
-        Debug.Log("You said: " + text);
-    }
+    
     #endregion
 }

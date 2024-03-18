@@ -19,6 +19,7 @@ public class NPCAnimatorController : MonoBehaviour
 
     private GameObject user = null; 
     #endregion
+
     #region AWAKE
     private void Awake()
     {
@@ -65,6 +66,7 @@ public class NPCAnimatorController : MonoBehaviour
         needsToBeAttracted = true; 
     }
     #endregion
+
     #region GIZMOS
     private void OnDrawGizmos()
     {
