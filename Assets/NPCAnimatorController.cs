@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oculus.Voice;
 
 public class NPCAnimatorController : MonoBehaviour
 {
@@ -14,8 +15,10 @@ public class NPCAnimatorController : MonoBehaviour
     [Header("Get User Atention parameters")]
     [SerializeField] private float timeBetweenGetAttention = 30.0f;
     private bool needsToBeAttracted = true;
-    private bool AttractionGet = false; 
+    private bool AttractionGet = false;
 
+    [Header("Chat & Voice Manager")]
+    [SerializeField] private NPCChatManager ChatManager;
 
     private GameObject user = null; 
     #endregion
@@ -24,6 +27,8 @@ public class NPCAnimatorController : MonoBehaviour
     private void Awake()
     {
         NPC_Animator = GetComponent<Animator>();
+        ChatManager = GetComponent<NPCChatManager>();
+
         user = GameObject.FindGameObjectWithTag("Player"); 
 
     }
@@ -32,6 +37,7 @@ public class NPCAnimatorController : MonoBehaviour
     #region START
     void Start()
     {
+
     }
     #endregion
 
@@ -41,8 +47,11 @@ public class NPCAnimatorController : MonoBehaviour
         //User cross the first radius, call his atention to get closer to the NPC
         if(Vector3.Distance(transform.position,user.transform.position) < NPC_GetAtentionRadius && needsToBeAttracted && !AttractionGet)
         {
+            
             Debug.Log("HEY YOU, COME HERE");
-            NPC_Animator.SetTrigger("HandWave"); 
+            ChatManager.MakeRequest("Tell me to get closer");
+            NPC_Animator.SetTrigger("HandWave");
+            
             needsToBeAttracted = false;
             if (!AttractionGet)
             {
@@ -54,6 +63,7 @@ public class NPCAnimatorController : MonoBehaviour
             AttractionGet = true;
             needsToBeAttracted = false; 
             Debug.Log("HI I AM...");
+            ChatManager.MakeRequest("Present yourself");
             StopCoroutine(WaitForNextAttraction()); 
         }
     }

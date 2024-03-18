@@ -8,8 +8,8 @@ public class STTManager : MonoBehaviour
 {
     #region PARAMETERS & VARIABLES
     //VTT (Speech to text) componentç
-    [SerializeField] private AppVoiceExperience STT;
-    [SerializeField] private NPCChatManager chatManager;
+    [SerializeField] private AppVoiceExperience NPCVoice;
+    [SerializeField] private NPCChatManager ChatManager;
     private bool CanTalk = true;
     private bool IsTalking = false; 
     #endregion
@@ -17,15 +17,15 @@ public class STTManager : MonoBehaviour
     #region AWAKE
     private void Awake()
     {
-        STT = GetComponent<AppVoiceExperience>();
-        chatManager = transform.parent.GetComponent<NPCChatManager>(); 
+        NPCVoice = GetComponent<AppVoiceExperience>();
+        ChatManager = transform.parent.GetComponent<NPCChatManager>(); 
     }
     #endregion
     #region START
     void Start()
     {
-        STT.VoiceEvents.OnFullTranscription.AddListener(DebugString);
-        STT.VoiceEvents.OnFullTranscription.AddListener(chatManager.MakeRequest);
+        NPCVoice.VoiceEvents.OnFullTranscription.AddListener(DebugString);
+        NPCVoice.VoiceEvents.OnFullTranscription.AddListener(ChatManager.MakeRequest);
     }
     #endregion
 
@@ -35,9 +35,9 @@ public class STTManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && CanTalk)
         {
             IsTalking = true;
-            CanTalk = false; 
-            Debug.Log("TALK...");
-            STT.Activate();
+            CanTalk = false;
+            Debug.Log("TALK:");
+            NPCVoice.Activate();
         }
     }
     #endregion

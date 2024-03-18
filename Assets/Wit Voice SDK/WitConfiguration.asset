@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae5a46bda3295124c99b0e6537ac7252, type: 3}
-  m_Name: VoiceSDKSetup
+  m_Name: WitConfiguration
   m_EditorClassIdentifier: 
   _clientAccessToken: 5YNFHYHPESTW7J4CNP524RD7545PHZYZ
   _appInfo:
@@ -294,7 +294,7 @@ MonoBehaviour:
       - fast
       - projected
   _configData: []
-  _configurationId: 68d74a60-e546-4196-af3f-f12d987ad334
+  _configurationId: 5298766b-46b2-43d3-8647-7bd2cbeb65e0
   timeoutMS: 10000
   endpointConfiguration:
     _uriScheme: 
@@ -309,7 +309,7 @@ MonoBehaviour:
     _converse: 
   isDemoOnly: 0
   useConduit: 1
-  _manifestLocalPath: ConduitManifest-e0de0fc4-2f97-4658-94f4-885e13274d34.json
+  _manifestLocalPath: ConduitManifest-773d31bb-ce1b-4fab-bc45-2e925a66344e.json
   excludedAssemblies:
   - Oculus.Voice.Demo, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - Meta.WitAi.Samples, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
