@@ -4,6 +4,7 @@
     "com.meta.xr.sdk.voice.telemetry": "file:../com.meta.xr.sdk.voice.telemetry-62.0.0/package",
     "com.srcnalt.openai-unity": "https://github.com/srcnalt/OpenAI-Unity.git",
     "com.unity.ai.navigation": "1.1.5",
+    "com.unity.animation.rigging": "1.2.1",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.development": "1.0.1",
     "com.unity.feature.vr": "1.0.0",
