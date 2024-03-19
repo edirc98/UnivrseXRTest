@@ -21,6 +21,7 @@ public class STTManager : MonoBehaviour
         ChatManager = transform.parent.GetComponent<NPCChatManager>(); 
     }
     #endregion
+
     #region START
     void Start()
     {
