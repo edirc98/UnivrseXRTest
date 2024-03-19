@@ -37,13 +37,7 @@ public class STTManager : MonoBehaviour
     #region UPDATE
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && CanTalk)
-        {
-            IsTalking = true;
-            CanTalk = false;
-            Debug.Log("TALK:");
-            NPCVoice.Activate();
-        }
+        
     }
     #endregion
 
@@ -51,8 +45,16 @@ public class STTManager : MonoBehaviour
     public void DebugString(string text)
     {
         Debug.Log("You said: " + text);
-        IsTalking = false; 
-        CanTalk = true; 
+        //IsTalking = false; 
+        //CanTalk = true; 
+    }
+
+    public void ActivateVoiceRecognition()
+    {
+        //IsTalking = true;
+        //CanTalk = false;
+        Debug.Log("TALK:");
+        NPCVoice.Activate();
     }
 
     public void DeselectTalkButton()
