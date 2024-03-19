@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Oculus.Voice;
-
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class STTManager : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class STTManager : MonoBehaviour
     [SerializeField] private AppVoiceExperience NPCVoice;
     [SerializeField] private NPCChatManager ChatManager;
     private bool CanTalk = true;
-    private bool IsTalking = false; 
+    private bool IsTalking = false;
+
+    private EventSystem eventSystem; 
     #endregion
 
     #region AWAKE
@@ -19,6 +22,7 @@ public class STTManager : MonoBehaviour
     {
         NPCVoice = GetComponent<AppVoiceExperience>();
         ChatManager = transform.parent.GetComponent<NPCChatManager>(); 
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>(); 
     }
     #endregion
 
@@ -49,6 +53,11 @@ public class STTManager : MonoBehaviour
         Debug.Log("You said: " + text);
         IsTalking = false; 
         CanTalk = true; 
+    }
+
+    public void DeselectTalkButton()
+    {
+        eventSystem.SetSelectedGameObject(null); 
     }
     #endregion
 }
