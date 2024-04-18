@@ -25,7 +25,9 @@ public class NPCChatManager : MonoBehaviour
     //List of request messages
     private List<ChatMessage> messages = new List<ChatMessage>();
 
-    public TimeManager timeManager = new TimeManager(); 
+    public TimeManager timeManager = new TimeManager();
+
+    [SerializeField] private TTSPolly Polly; 
     #endregion
 
 
@@ -39,7 +41,7 @@ public class NPCChatManager : MonoBehaviour
     #region AWAKE
     private void Awake()
     {
-
+        Polly = GameObject.Find("TTS Polly").GetComponent<TTSPolly>();
     }
     #endregion
 
@@ -88,11 +90,12 @@ public class NPCChatManager : MonoBehaviour
             Debug.Log("ROLE: "+ responseMessage.Role); 
             Debug.Log("RESPONSE:" + responseMessage.Content);
 
-            OnResponse.Invoke(responseMessage.Content); 
             float endTime = Time.time;
             timeManager.AddToTimer(endTime - startTime);
             timeManager.AddTimeSection("Chat GPT Response", startTime, endTime);
-            timeManager.PrintLastSection(); 
+            timeManager.PrintLastSection();
+
+            Polly.MakeRequest(responseMessage.Content); 
         }
         
     }
