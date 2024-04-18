@@ -14,6 +14,7 @@ public class STTManager : MonoBehaviour
     private bool CanTalk = true;
     private bool IsTalking = false;
 
+    float start = 0, end = 0;
     private EventSystem eventSystem; 
     #endregion
 
@@ -60,6 +61,23 @@ public class STTManager : MonoBehaviour
     public void DeselectTalkButton()
     {
         eventSystem.SetSelectedGameObject(null); 
+    }
+
+
+    public void setStartTime()
+    {
+        start = Time.time;
+    }
+    public void setEndTime()
+    {
+        end = Time.time;
+    }
+
+    public void SetTimeSection()
+    {
+        ChatManager.timeManager.AddTimeSection("Speach To Text", start, end);
+        ChatManager.timeManager.AddToTimer(end - start);
+        ChatManager.timeManager.PrintLastSection();
     }
     #endregion
 }

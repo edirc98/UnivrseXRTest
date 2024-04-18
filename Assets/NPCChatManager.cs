@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events; 
 using OpenAI;
+using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Receiver.Primitives;
 
 public class NPCChatManager : MonoBehaviour
 {
@@ -24,8 +25,9 @@ public class NPCChatManager : MonoBehaviour
     //List of request messages
     private List<ChatMessage> messages = new List<ChatMessage>();
 
-    
+    public TimeManager timeManager = new TimeManager(); 
     #endregion
+
 
     #region EVENTS
     [System.Serializable]
@@ -58,6 +60,7 @@ public class NPCChatManager : MonoBehaviour
     #region OPEN AI API FUNCTIONS
     public async void MakeRequest(string userMessageText)
     {
+        float startTime = Time.time;
         //Create message 
         ChatMessage newMessage =  CreateChatMessage("user", userMessageText);
         Debug.Log("ROLE: " + newMessage.Role);
@@ -86,6 +89,10 @@ public class NPCChatManager : MonoBehaviour
             Debug.Log("RESPONSE:" + responseMessage.Content);
 
             OnResponse.Invoke(responseMessage.Content); 
+            float endTime = Time.time;
+            timeManager.AddToTimer(endTime - startTime);
+            timeManager.AddTimeSection("Chat GPT Response", startTime, endTime);
+            timeManager.PrintLastSection(); 
         }
         
     }
