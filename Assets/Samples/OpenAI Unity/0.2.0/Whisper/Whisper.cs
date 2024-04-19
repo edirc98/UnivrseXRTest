@@ -84,7 +84,7 @@ namespace Samples.Whisper
             {
                 FileData = new FileData() {Data = data, Name = "audio.wav"},
                 Model = "whisper-1",
-                Language = "en"
+                Language = "es"
             };
             Debug.Log("Detected Request Lenguage:" + req.Language); 
             var res = await openai.CreateAudioTranscription(req);
