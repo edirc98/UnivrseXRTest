@@ -18,7 +18,8 @@ public class TTSPolly : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private NPCChatManager chatManager; 
     private BasicAWSCredentials credentials;
-    private AmazonPollyClient client; 
+    private AmazonPollyClient client;
+    float start = 0, end = 0;
 
     void Start()
     {
@@ -39,17 +40,24 @@ public class TTSPolly : MonoBehaviour
 
     private async void PollyRequest(string Text)
     {
-        Debug.Log("Request to Polly with: " + Text); 
+        Debug.Log("Request to Polly with: " + Text);
+        start = Time.time; 
         SynthesizeSpeechRequest speechRequest = new SynthesizeSpeechRequest()
         {
             Text = Text,
             Engine = Engine.Neural,
-            VoiceId = VoiceId.Arthur,
+            VoiceId = VoiceId.Sergio,
             OutputFormat = OutputFormat.Mp3
         };
 
         var res = await client.SynthesizeSpeechAsync(speechRequest);
+
+        end = Time.time;
+        chatManager.timeManager.AddTimeSection("Text To Speech", start, end);
+        chatManager.timeManager.AddToTimer(end - start);
+        chatManager.timeManager.PrintLastSection();
         Debug.Log("Response to Polly Request recived");
+
         SaveToFile(res.AudioStream);
 
         using (var www = UnityWebRequestMultimedia.GetAudioClip($"{Application.persistentDataPath}/audio.mp3", AudioType.MPEG))
