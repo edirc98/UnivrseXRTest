@@ -62,7 +62,9 @@ public class TimeManager : MonoBehaviour
 
     public void PrintLastSection()
     {
-        Debug.Log("Section Name: " + sections[sections.Count - 1].sectionName + "\n" +
-              "Section Duration: " + sections[sections.Count - 1].sectionDuration );
+        Debug.Log("Section Name: " + sections[sections.Count - 1].sectionName     + "\n" 
+            + "Section Duration: " + sections[sections.Count - 1].sectionDuration + "\n"
+            + "Section Start: "    + sections[sections.Count - 1].startTime       + "\n"
+            + "Section End: "      + sections[sections.Count - 1].endTime);
     }
 }

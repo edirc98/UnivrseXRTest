@@ -86,6 +86,7 @@ namespace Samples.Whisper
                 Model = "whisper-1",
                 Language = "en"
             };
+            Debug.Log("Detected Request Lenguage:" + req.Language); 
             var res = await openai.CreateAudioTranscription(req);
 
             end = Time.time;

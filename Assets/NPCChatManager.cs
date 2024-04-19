@@ -26,7 +26,7 @@ public class NPCChatManager : MonoBehaviour
     private List<ChatMessage> messages = new List<ChatMessage>();
 
     public TimeManager timeManager = new TimeManager();
-
+    public bool UsePolly = false; 
     [SerializeField] private TTSPolly Polly; 
     #endregion
 
@@ -41,7 +41,7 @@ public class NPCChatManager : MonoBehaviour
     #region AWAKE
     private void Awake()
     {
-        Polly = GameObject.Find("TTS Polly").GetComponent<TTSPolly>();
+       if(UsePolly) Polly = GameObject.Find("TTS Polly").GetComponent<TTSPolly>();
     }
     #endregion
 
@@ -94,8 +94,12 @@ public class NPCChatManager : MonoBehaviour
             timeManager.AddToTimer(endTime - startTime);
             timeManager.AddTimeSection("Chat GPT Response", startTime, endTime);
             timeManager.PrintLastSection();
+            if (!UsePolly)
+            {
+                OnResponse.Invoke(responseMessage.Content); 
+            }
 
-            Polly.MakeRequest(responseMessage.Content); 
+            if(UsePolly) Polly.MakeRequest(responseMessage.Content); 
         }
         
     }
@@ -118,6 +122,7 @@ public class NPCChatManager : MonoBehaviour
                            + "You have to answer the questions using the information about your personality and the scene around you described below.\n"
                            + "Do not invent or create answers that are not mentioned or described in that information.\n"
                            + "Don't break character. Don´t ever mention that you're an AI model, computer program or video game character.\n"
+                           + "You should answer in the same lenguage you recive, for example the input is in spanish you awnser in spanish, and same for english, etc\n"
                            //+ "You must answer in less than " + MaxResponseTokens + "words.\n"
                            + "Here is your presonnality: \n" + NPC_Personality + "\n"
                            + "Here is the information of your sourroundign scene: \n" + NPC_Scene + "\n"; 

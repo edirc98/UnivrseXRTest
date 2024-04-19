@@ -79,5 +79,12 @@ public class STTManager : MonoBehaviour
         ChatManager.timeManager.AddToTimer(end - start);
         ChatManager.timeManager.PrintLastSection();
     }
+
+    public void SetTimeSectionTTS()
+    {
+        ChatManager.timeManager.AddTimeSection("Text To Speach", start, end);
+        ChatManager.timeManager.AddToTimer(end - start);
+        ChatManager.timeManager.PrintLastSection();
+    }
     #endregion
 }
